@@ -284,12 +284,16 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
 
         sendReply(channel, buf.readUnsignedShort());
 
+        Position p = getp(positions, deviceSession);
+        return positions.isEmpty() ? null : positions;
+    }
+
+    private Position getp(List<Position> positions, DeviceSession deviceSession) {
         for (Position p : positions) {
             p.setProtocol(getProtocolName());
             p.setDeviceId(deviceSession.getDeviceId());
         }
-
-        return positions.isEmpty() ? null : positions;
+        return p;
     }
 
 }
